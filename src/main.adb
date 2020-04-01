@@ -8,8 +8,6 @@ is
    package RCC renames Componolit.Runtime.Drivers.RCC;
    LD3 : constant GPIO.Pin := GPIO.PC8;
    LD4 : constant GPIO.Pin := GPIO.PC9;
-   RD  : constant GPIO.Pin := GPIO.PC0;
-   RDV : GPIO.Value;
    procedure Enable_Segment (Pin : GPIO.Pin);
    procedure Enable_Segment (Pin : GPIO.Pin)
    is
@@ -20,11 +18,11 @@ is
 begin
    RCC.Set (RCC.IOPC, True);
    RCC.Set (RCC.IOPB, True);
+   RCC.Set (RCC.IOPD, True);
    GPIO.Configure (LD3, GPIO.Port_Out);
    GPIO.Configure (LD4, GPIO.Port_Out);
-   GPIO.Configure (RD, GPIO.Port_In, GPIO.Low);
    GPIO.Write (LD3, GPIO.High);
-   GPIO.Write (LD4, GPIO.Low);
+   GPIO.Write (LD4, GPIO.High);
    Enable_Segment (GPIO.PB4);
    Enable_Segment (GPIO.PC5);
    Enable_Segment (GPIO.PB0);
@@ -33,8 +31,11 @@ begin
    Enable_Segment (GPIO.PB10);
    Enable_Segment (GPIO.PB11);
    Enable_Segment (GPIO.PB12);
-   loop
-      GPIO.Read (RD, RDV);
-      GPIO.Write (LD4, RDV);
-   end loop;
+   Enable_Segment (GPIO.PC13);
+   Enable_Segment (GPIO.PB7);
+   Enable_Segment (GPIO.PB6);
+   Enable_Segment (GPIO.PB5);
+   Enable_Segment (GPIO.PB4);
+   Enable_Segment (GPIO.PB3);
+   Enable_Segment (GPIO.PD2);
 end Main;
