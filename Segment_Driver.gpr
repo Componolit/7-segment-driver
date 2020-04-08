@@ -1,5 +1,5 @@
 
-project Test is
+project Segment_Driver is
 
    for Source_Dirs use ("src", "src/generated");
    for Object_Dir use "obj";
@@ -32,4 +32,4 @@ project Test is
       for Connection_Tool use "st-util";
    end Ide;
 
-end Test;
+end Segment_Driver;
