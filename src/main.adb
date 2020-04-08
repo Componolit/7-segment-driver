@@ -2,6 +2,7 @@
 with Componolit.Runtime.Drivers.GPIO;
 with Componolit.Runtime.Drivers.RCC;
 with Segment_Driver.Backend;
+with Segment_Driver;
 
 procedure Main
 is
@@ -18,13 +19,14 @@ is
 --     end Enable_Segment;
    package Driver_left is new Segment_Driver.Backend (GPIO.PD2, GPIO.PB3,
                                                       GPIO.PC13, GPIO.PB7,
-                                                      GPIO.PB5, GPIO.PB6);
-   --  GPIO.PB4);
+                                                      GPIO.PB5, GPIO.PB6,
+    GPIO.PB4);
 
    package Driver_right is new Segment_Driver.Backend (GPIO.PC5, GPIO.PB2,
-                                                        GPIO.PB10, GPIO.PB11,
-                                                        GPIO.PB12, GPIO.PB0);
-
+                                                       GPIO.PB10, GPIO.PB11,
+                                                       GPIO.PB12, GPIO.PB0,
+                                                       GPIO.PB4);
+   i : Integer := 0;
 begin
    RCC.Set (RCC.IOPC, True);
    RCC.Set (RCC.IOPB, True);
@@ -52,7 +54,17 @@ begin
    Driver_left.Initialize;
    Driver_right.Initialize;
    loop
-      Driver_left.Circle;
+      for N in Segment_Driver.Nibble range
+        Segment_Driver.Nibble'First .. Segment_Driver.Nibble'Last loop
+         Driver_left.Show (N);
+         i := 0;
+
+         while i < 1000000 loop
+            i := i + 1;
+            pragma Inspection_Point (i);
+         end loop;
+      end loop;
+
       Driver_right.Circle;
    end loop;
 end Main;
