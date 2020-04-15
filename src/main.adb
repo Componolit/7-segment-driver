@@ -9,23 +9,26 @@ procedure Main
 is
    package GPIO renames Componolit.Runtime.Drivers.GPIO;
    package RCC renames Componolit.Runtime.Drivers.RCC;
-   LD3   : constant GPIO.Pin := GPIO.PC8;
-   LD4   : constant GPIO.Pin := GPIO.PC9;
-   Input : Segment_Driver.Nibble;
-   I     : Integer;
-
+   LD3         : constant GPIO.Pin := GPIO.PC8;
+   LD4         : constant GPIO.Pin := GPIO.PC9;
+   Input_Right : Segment_Driver.Nibble;
+   Input_Left  : Segment_Driver.Nibble;
    package Driver_Left is new Segment_Driver.Backend (GPIO.PD2, GPIO.PB3,
                                                       GPIO.PC13, GPIO.PB7,
                                                       GPIO.PB5, GPIO.PB6,
                                                       GPIO.PB4);
-
    package Driver_Right is new Segment_Driver.Backend (GPIO.PC5, GPIO.PB2,
                                                        GPIO.PB10, GPIO.PB11,
                                                        GPIO.PB12, GPIO.PB0,
                                                        GPIO.PB1);
-
-   package Driver_Numbers is new Segment_Driver.Frontend (GPIO.PC7, GPIO.PC6,
-                                                          GPIO.PB15, GPIO.PB14);
+   package Driver_Numbers_Right is new Segment_Driver.Frontend (GPIO.PC7,
+                                                                GPIO.PC6,
+                                                                GPIO.PB15,
+                                                                GPIO.PB14);
+   package Driver_Numbers_Left is new Segment_Driver.Frontend (GPIO.PC14,
+                                                               GPIO.PC15,
+                                                               GPIO.PC0,
+                                                               GPIO.PC1);
 begin
    RCC.Set (RCC.IOPC, True);
    RCC.Set (RCC.IOPB, True);
@@ -34,24 +37,16 @@ begin
    GPIO.Configure (LD4, GPIO.Port_Out);
    GPIO.Write (LD3, GPIO.High);
    GPIO.Write (LD4, GPIO.High);
-   Driver_left.Initialize;
-   Driver_right.Initialize;
-   Driver_Numbers.Initialize;
+   Driver_Left.Initialize;
+   Driver_Right.Initialize;
+   Driver_Numbers_Right.Initialize;
+   Driver_Numbers_Left.Initialize;
 
    loop
-      for N in Segment_Driver.Nibble range
-        Segment_Driver.Nibble'First .. Segment_Driver.Nibble'Last loop
-         Driver_left.Show (N);
-         I := 0;
-
-         while I < 1000000 loop
-            I := I + 1;
-            pragma Inspection_Point (I);
-         end loop;
-
-         Driver_Numbers.Read (Input);
-         Driver_right.Show (Input);
-      end loop;
+      Driver_Numbers_Right.Read (Input_Right);
+      Driver_Numbers_Left.Read (Input_Left);
+      Driver_Right.Show (Input_Right);
+      Driver_Left.Show (Input_Left);
    end loop;
 
 end Main;

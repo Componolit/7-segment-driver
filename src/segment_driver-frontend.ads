@@ -7,5 +7,5 @@ package Segment_Driver.Frontend is
 
    procedure Read (Value : out Nibble);
    procedure Initialize;
-   
+
 end Segment_Driver.Frontend;
