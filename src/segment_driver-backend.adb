@@ -41,8 +41,8 @@ package body Segment_Driver.Backend is
 
       Values : Value_Array;
    begin
-      Values (1) := (if Value in 0 | 2 | 3 | 5 | 6 | 7 | 8 | 9 | 10 | 12 | 14
-                      | 15
+      Values (1) := (if Value in 0 | 2 |  3 |  5 |  6 |  7 |
+                                 8 | 9 | 10 | 12 | 14 | 15
                     then
                        GPIO.High
                     else
@@ -52,8 +52,8 @@ package body Segment_Driver.Backend is
                        GPIO.High
                     else
                        GPIO.Low); --  B
-      Values (3) := (if Value in 0 | 1 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
-                       | 13
+      Values (3) := (if Value in 0 | 1 | 3 |  4 |  5 |  6 |
+                                 7 | 8 | 9 | 10 | 11 | 13
                       then
                        GPIO.High
                     else
@@ -68,14 +68,14 @@ package body Segment_Driver.Backend is
                        GPIO.High
                     else
                        GPIO.Low); --  E
-      Values (6) := (if Value in 0 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 12 | 14
-                      | 15
+      Values (6) := (if Value in 0 |  4 |  5 |  6 |  8 | 9 |
+                                10 | 11 | 12 | 14 | 15
                     then
                        GPIO.High
                     else
                        GPIO.Low); -- F
-      Values (7) := (if Value in 2 | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 13
-                      | 14 | 15
+      Values (7) := (if Value in 2 |  3 |  4 |  5 |  6 |  8 |
+                                 9 | 10 | 11 | 13 | 14 | 15
                     then
                        GPIO.High
                     else
