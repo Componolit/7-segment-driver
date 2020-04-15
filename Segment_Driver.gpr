@@ -1,3 +1,4 @@
+with "switches";
 
 project Segment_Driver is
 
@@ -11,7 +12,8 @@ project Segment_Driver is
    for Runtime ("Ada") use "ada-runtime/build/stm32f0/obj";
 
    package Compiler is
-      for Default_Switches ("Ada") use ("-gnatg", "-g", "-mthumb", "-ffunction-sections", "-fdata-sections");
+      for Default_Switches ("Ada") use ("-gnatg", "-g", "-mthumb", "-ffunction-sections", "-fdata-sections")
+         & Switches.Compiler_Switches;
       for Default_Switches ("Asm_CPP") use ("-g", "-mthumb", "-ffunction-sections", "-fdata-sections");
    end Compiler;
 
