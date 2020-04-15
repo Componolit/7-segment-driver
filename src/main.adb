@@ -20,7 +20,7 @@ is
    package Driver_left is new Segment_Driver.Backend (GPIO.PD2, GPIO.PB3,
                                                       GPIO.PC13, GPIO.PB7,
                                                       GPIO.PB5, GPIO.PB6,
-    GPIO.PB4);
+                                                      GPIO.PB4);
 
    package Driver_right is new Segment_Driver.Backend (GPIO.PC5, GPIO.PB2,
                                                        GPIO.PB10, GPIO.PB11,
@@ -53,6 +53,7 @@ begin
 
    Driver_left.Initialize;
    Driver_right.Initialize;
+
    loop
       for N in Segment_Driver.Nibble range
         Segment_Driver.Nibble'First .. Segment_Driver.Nibble'Last loop
