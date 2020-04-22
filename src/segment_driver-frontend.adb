@@ -1,5 +1,5 @@
 package body Segment_Driver.Frontend with
-SPARK_Mode
+   SPARK_Mode
 is
 
    procedure Initialize is
@@ -11,7 +11,6 @@ is
    end Initialize;
 
    procedure Read (Value : out Nibble) is
-
       Nibble_0 : Nibble;
       Nibble_1 : Nibble;
       Nibble_2 : Nibble;
@@ -53,7 +52,6 @@ is
          when GPIO.Low =>
             Nibble_3 := 0;
       end case;
-
       Value := Nibble_0 + Nibble_1 + Nibble_2 + Nibble_3;
    end Read;
 
