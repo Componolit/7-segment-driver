@@ -7,7 +7,9 @@ generic
    F : GPIO.Pin;
    G : GPIO.Pin;
 
-package Segment_Driver.Backend is
+package Segment_Driver.Backend with
+SPARK_Mode
+is
 
    procedure Show (Value : Nibble);
    procedure Initialize;
