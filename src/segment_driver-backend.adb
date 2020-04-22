@@ -1,10 +1,6 @@
 package body Segment_Driver.Backend with
-SPARK_Mode
+   SPARK_Mode
 is
-
-   ----------------
-   -- Initialize --
-   ----------------
 
    procedure Initialize is
    begin
@@ -13,33 +9,8 @@ is
       end loop;
    end Initialize;
 
-   ------------
-   -- Circle --
-   ------------
-
-   procedure Circle is
-
-      i : Integer := 0;
-   begin
-
-         for Pin of Arr loop
-
-            GPIO.Write (Pin, GPIO.High);
-            i := 0;
-
-            while i < 100000 loop
-               i := i + 1;
-               pragma Inspection_Point (i);
-            end loop;
-
-            GPIO.Write (Pin, GPIO.Low);
-         end loop;
-   end Circle;
-
    procedure Show (Value : Nibble) is
-
       type Value_Array is array (Index'Range) of GPIO.Value;
-
       Values : Value_Array;
    begin
       Values := (1 => (if Value in 0 | 2 |  3 |  5 |  6 |  7 |
@@ -81,7 +52,6 @@ is
                           GPIO.High
                        else
                           GPIO.Low)); --  G
-
       for I in Index'Range loop
          GPIO.Write (Pins (I), Values (I));
       end loop;

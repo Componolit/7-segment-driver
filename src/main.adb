@@ -42,12 +42,10 @@ begin
    Driver_Right.Initialize;
    Driver_Numbers_Right.Initialize;
    Driver_Numbers_Left.Initialize;
-
    loop
       Driver_Numbers_Right.Read (Input_Right);
       Driver_Numbers_Left.Read (Input_Left);
       Driver_Right.Show (Input_Right);
       Driver_Left.Show (Input_Left);
    end loop;
-
 end Main;
