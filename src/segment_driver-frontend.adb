@@ -1,6 +1,6 @@
-pragma Ada_2012;
-
-package body Segment_Driver.Frontend is
+package body Segment_Driver.Frontend with
+SPARK_Mode
+is
 
    procedure Initialize is
    begin
