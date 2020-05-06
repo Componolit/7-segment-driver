@@ -1,6 +1,5 @@
 
 with Componolit.Runtime.Drivers.GPIO;
-with Componolit.Runtime.Drivers.RCC;
 with Segment_Driver.Backend;
 with Segment_Driver;
 with Segment_Driver.Frontend;
@@ -9,7 +8,6 @@ procedure Main with
   SPARK_Mode
 is
    package GPIO renames Componolit.Runtime.Drivers.GPIO;
-   package RCC renames Componolit.Runtime.Drivers.RCC;
    LD3         : constant GPIO.Pin := GPIO.PC8;
    LD4         : constant GPIO.Pin := GPIO.PC9;
    Input_Right : Segment_Driver.Nibble;
@@ -31,15 +29,13 @@ is
                                                                GPIO.PC0,
                                                                GPIO.PC1);
 begin
-   RCC.Set (RCC.IOPC, True);
-   RCC.Set (RCC.IOPB, True);
-   RCC.Set (RCC.IOPD, True);
+   GPIO.Initialize;
    GPIO.Configure (LD3, GPIO.Port_Out);
    GPIO.Configure (LD4, GPIO.Port_Out);
    GPIO.Write (LD3, GPIO.High);
    GPIO.Write (LD4, GPIO.High);
-   Driver_Left.Initialize;
    Driver_Right.Initialize;
+   Driver_Left.Initialize;
    Driver_Numbers_Right.Initialize;
    Driver_Numbers_Left.Initialize;
    loop
