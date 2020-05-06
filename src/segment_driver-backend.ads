@@ -21,18 +21,21 @@ is
    Pins : constant Segment_Array := (A, B, C, D, E, F, G);
 
    procedure Show (Value : Nibble) with
-     Pre  => (for all P in GPIO.Pin => GPIO.Valid (P))
-             and then (for all P of Pins => GPIO.Pin_Mode (P) = GPIO.Port_Out),
-     Post => (for all P in GPIO.Pin => GPIO.Valid (P))
-             and then (for all P of Pins => GPIO.Pin_Mode (P) = GPIO.Port_Out)
-             and then (for all P in GPIO.Pin => GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P));
+     Pre    => (for all P in GPIO.Pin => GPIO.Valid (P))
+               and then (for all P of Pins => GPIO.Pin_Mode (P) = GPIO.Port_Out),
+     Post   => (for all P in GPIO.Pin => GPIO.Valid (P))
+               and then (for all P of Pins => GPIO.Pin_Mode (P) = GPIO.Port_Out)
+               and then (for all P in GPIO.Pin => GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P)),
+     Global => (In_Out => GPIO.GPIO_State,
+               Proof_In => GPIO.Shadow_Configuration_State);
 
    procedure Initialize with
-     Pre  => (for all P in GPIO.Pin => GPIO.Valid (P)),
-     Post => (for all P in GPIO.Pin => GPIO.Valid (P))
-             and then (for all P of Pins => GPIO.Pin_Mode (P) = GPIO.Port_Out)
-             and then (for all P in GPIO.Pin =>
-                         (if P not in A | B | C | D | E | F | G
-                              then GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P)));
+     Pre    => (for all P in GPIO.Pin => GPIO.Valid (P)),
+     Post   => (for all P in GPIO.Pin => GPIO.Valid (P))
+               and then (for all P of Pins => GPIO.Pin_Mode (P) = GPIO.Port_Out)
+               and then (for all P in GPIO.Pin =>
+                           (if P not in A | B | C | D | E | F | G
+                                then GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P))),
+     Global => (In_Out => (GPIO.Shadow_Configuration_State, GPIO.Configuration_State));
 
 end Segment_Driver.Backend;
