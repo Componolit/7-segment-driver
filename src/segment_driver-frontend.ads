@@ -11,12 +11,17 @@ is
 
    procedure Read (Value : out Nibble) with
      Pre    => (for all P in GPIO.Pin => GPIO.Valid (P))
+               and then GPIO.Configured (Bit_0)
+               and then GPIO.Configured (Bit_1)
+               and then GPIO.Configured (Bit_2)
+               and then GPIO.Configured (Bit_3)
                and then GPIO.Pin_Mode (Bit_0) = GPIO.Port_In
                and then GPIO.Pin_Mode (Bit_1) = GPIO.Port_In
                and then GPIO.Pin_Mode (Bit_2) = GPIO.Port_In
                and then GPIO.Pin_Mode (Bit_3) = GPIO.Port_In,
      Post   => (for all P in GPIO.Pin => GPIO.Valid (P))
-               and then (for all P in GPIO.Pin => GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P)),
+               and then (for all P in GPIO.Pin => GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P))
+               and then (for all P in GPIO.Pin => GPIO.Pins_Configured (P) = GPIO.Pins_Configured'Old (P)),
      Global => (Input => GPIO.GPIO_State,
               Proof_In => GPIO.Shadow_Configuration_State);
 
@@ -27,9 +32,16 @@ is
                and then GPIO.Pin_Mode (Bit_1) = GPIO.Port_In
                and then GPIO.Pin_Mode (Bit_2) = GPIO.Port_In
                and then GPIO.Pin_Mode (Bit_3) = GPIO.Port_In
+               and then GPIO.Configured (Bit_0)
+               and then GPIO.Configured (Bit_1)
+               and then GPIO.Configured (Bit_2)
+               and then GPIO.Configured (Bit_3)
                and then (for all P in GPIO.Pin =>
                            (if P not in Bit_0 | Bit_1 | Bit_2 | Bit_3
-                                then GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P))),
+                                then GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P)))
+               and then (for all P in GPIO.Pin =>
+                           (if P not in Bit_0 | Bit_1 | Bit_2 | Bit_3
+                                then GPIO.Pins_Configured (P) = GPIO.Pins_Configured'Old (P))),
      Global => (In_Out => (GPIO.Shadow_Configuration_State, GPIO.Configuration_State));
 
 end Segment_Driver.Frontend;
