@@ -28,7 +28,7 @@ is
                and then (for all P of Pins => GPIO.Pin_Mode (P) = GPIO.Port_Out)
                and then (for all P in GPIO.Pin => GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P))
                and then (for all P in GPIO.Pin => GPIO.Pins_Configured (P) = GPIO.Pins_Configured'Old (P)),
-     Global => (In_Out => GPIO.GPIO_State,
+     Global => (In_Out  => GPIO.GPIO_State,
                Proof_In => GPIO.Shadow_Configuration_State);
 
    procedure Initialize with
