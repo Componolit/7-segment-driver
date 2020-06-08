@@ -22,8 +22,8 @@ is
      Post   => (for all P in GPIO.Pin => GPIO.Valid (P))
                and then (for all P in GPIO.Pin => GPIO.Pin_Modes (P) = GPIO.Pin_Modes'Old (P))
                and then (for all P in GPIO.Pin => GPIO.Pins_Configured (P) = GPIO.Pins_Configured'Old (P)),
-     Global => (Input => GPIO.GPIO_State,
-              Proof_In => GPIO.Shadow_Configuration_State);
+     Global => (Input   => GPIO.GPIO_State,
+               Proof_In => GPIO.Shadow_Configuration_State);
 
    procedure Initialize with
      Pre    => (for all P in GPIO.Pin => GPIO.Valid (P)),
