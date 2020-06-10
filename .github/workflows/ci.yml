@@ -1,0 +1,12 @@
+name: CI
+
+on: push
+
+jobs:
+    gnat_community_2020:
+        name: gnat-community-2020
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - name: GNAT Community 2020
+              run: docker run -v $PWD:/7-Segment-Driver -t componolit/ci:gnat-community-2020-arm /bin/sh -c "/7-Segment-Driver/.github/workflows/ci.sh"
